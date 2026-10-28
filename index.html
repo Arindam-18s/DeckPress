@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>DeckPress — Turn slide decks into ink-friendly printables</title>
+  <meta name="description" content="Stack lecture or PPT slides into a print-ready PDF, with automatic dark-slide inversion to save ink. Runs entirely in your browser — nothing is uploaded." />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+</head>
+<body>
+  <header>
+    <h1>DeckPress</h1>
+    <p>Stack lecture slides into a print-ready PDF. Dark slides get auto-inverted to save ink, and short leftover pages are padded automatically.</p>
+    <ol class="steps">
+      <li>Upload PDF or screenshots</li>
+      <li>Configure grid &amp; paper size</li>
+      <li>Build &amp; download PDF</li>
+    </ol>
+    <ul class="badges">
+      <li>Client-side processing</li>
+      <li>No server uploads</li>
+    </ul>
+  </header>
+
+  <main>
+    <section class="panel">
+      <div class="field">
+        <label>Lecture PDF or Slide Images</label>
+        <div class="dropzone" id="dropzone" tabindex="0" role="button">
+          📁 Click to upload or drag files here
+          <span>Supports PDF, JPG, PNG</span>
+        </div>
+        <input type="file" id="fileInput" accept="application/pdf,image/*" multiple style="display:none;" />
+      </div>
+
+      <div class="row2 field">
+        <div>
+          <label for="perSheet">Slides per sheet</label>
+          <select id="perSheet">
+            <option value="2">2-up</option>
+            <option value="4" selected>4-up</option>
+            <option value="6">6-up</option>
+          </select>
+        </div>
+        <div>
+          <label for="paper">Paper size</label>
+          <select id="paper">
+            <option value="a4" selected>A4</option>
+            <option value="letter">Letter</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="padMode">Pad short ending sheets with…</label>
+        <select id="padMode">
+          <option value="last" selected>Repeated last slide</option>
+          <option value="first">Repeated first slide</option>
+          <option value="blank">Blank cell</option>
+        </select>
+      </div>
+
+      <div class="field checkline">
+        <input type="checkbox" id="autoInvert" checked />
+        <label for="autoInvert" style="margin:0; display:inline;">Auto-invert dark slides to save ink</label>
+      </div>
+
+      <button class="btn-primary" id="buildBtn" disabled>Build Printable PDF</button>
+      <button class="btn-ghost" id="clearBtn" style="margin-top:6px; width:100%;">Clear All</button>
+      <div class="status" id="status">No slides loaded.</div>
+      <div class="progress" id="progressWrap"><div class="bar" id="progressBar"></div></div>
+    </section>
+
+    <section class="panel">
+      <h2>Loaded Slides <span style="font-weight:normal; font-size:11px; color:var(--muted);">(Click to invert colors, × to delete)</span></h2>
+      <div class="strip" id="thumbStrip"></div>
+
+      <div class="section-gap">
+        <h2>Printable Output Preview</h2>
+        <div class="muted-note" id="sheetsNote">Build the PDF to preview layout sheets.</div>
+
+        <div class="field" style="margin-top:12px;">
+          <label for="pdfFilename">Output File Name</label>
+          <input type="text" id="pdfFilename" value="deckpress.pdf" />
+        </div>
+
+        <div class="sheets" id="sheetsPreview"></div>
+        <button class="btn-primary" id="downloadBtn" style="margin-top:12px;" disabled>Download PDF</button>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>DeckPress — All slide processing happens locally inside your browser sandbox.</p>
+  </footer>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>
